@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    {% if profile %}
+        <h1>{{ profile.user.get_full_name|default:"User's Name" }}'s Resume</h1>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <p><strong>Location:</strong> {{ profile.location }}</p>
+        <p><strong>Summary:</strong> {{ profile.summary }}</p>
+
+        <hr>
+        <h3>Skills</h3>
+        {% for skill in profile.skills.all %}
+            <div class="mb-2">
+                <strong>{{ skill.category }}:</strong> {{ skill.skills }}
+            </div>
+        {% empty %}
+            <p>No skills listed.</p>
+        {% endfor %}
+
+        <hr>
+        <h3>Experience</h3>
+        {% for experience in profile.experiences.all %}
+            <div class="mb-3">
+                <h4>{{ experience.company }}</h4>
+                <p><strong>Position:</strong> {{ experience.position }}</p>
+                <p><strong>Location:</strong> {{ experience.location }}</p>
+                <p><strong>Duration:</strong> {{ experience.start_date }} to {{ experience.end_date|default:"Present" }}</p>
+                <p><strong>Responsibilities:</strong></p>
+                <ul>
+                    {% for item in experience.responsibilities.split(';') %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% empty %}
+            <p>No professional experience listed.</p>
+        {% endfor %}
+
+        <hr>
+        <h3>Education</h3>
+        {% for education in profile.education.all %}
+            <div class="mb-3">
+                <h4>{{ education.institution }}</h4>
+                <p><strong>Degree:</strong> {{ education.degree }}</p>
+                <p><strong>Location:</strong> {{ education.location }}</p>
+                <p><strong>Completion Date:</strong> {{ education.completion_date }}</p>
+            </div>
+        {% empty %}
+            <p>No educational records found.</p>
+        {% endfor %}
+
+        <hr>
+        <h3>Certifications</h3>
+        {% for certification in profile.certifications.all %}
+            <div class="mb-3">
+                <strong>{{ certification.title }}</strong> - {{ certification.organization }}
+                <p><strong>Date:</strong> {{ certification.date }}</p>
+                <p><strong>Skills Covered:</strong> {{ certification.skills_covered }}</p>
+            </div>
+        {% empty %}
+            <p>No certifications listed.</p>
+        {% endfor %}
+
+    {% else %}
+        <h1>No Resume Created</h1>
+        <p>Please visit the admin panel to create your resume data.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

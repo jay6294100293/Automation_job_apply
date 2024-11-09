@@ -1,0 +1,355 @@
+{#{% extends 'base.html' %}#}
+{##}
+{#{% block content %}#}
+{#<style>#}
+{#    .resume-container {#}
+{#        font-family: 'Times New Roman', serif;#}
+{#        margin: auto;#}
+{#        padding: 1cm;#}
+{#        width: 21cm; /* A4 width */#}
+{#        min-height: 29.7cm; /* A4 height */#}
+{#        border: 1px solid #D3D3D3;#}
+{#        border-radius: 5px;#}
+{#        background-color: #fff;#}
+{#        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);#}
+{#        font-size: 11pt;#}
+{#        line-height: 1.1;#}
+{#        page-break-inside: avoid;#}
+{#    }#}
+{##}
+{#    .header, .section {#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .header h1 {#}
+{#        font-size: 20pt;#}
+{#        text-align: center;#}
+{#        margin: 0;#}
+{#    }#}
+{##}
+{#    .header p {#}
+{#        text-align: center;#}
+{#        margin: 0;#}
+{#    }#}
+{##}
+{#    .section-title {#}
+{#        border-bottom: 1px solid #000;#}
+{#        font-size: 14pt;#}
+{#        font-weight: bold;#}
+{#        margin-bottom: 10px;#}
+{#        padding-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .section-content {#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .experience, .education, .certification {#}
+{#        display: flex;#}
+{#        justify-content: space-between;#}
+{#        align-items: flex-start;#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .content-details {#}
+{#        width: 80%;#}
+{#    }#}
+{##}
+{#    .content-title {#}
+{#        font-weight: bold;#}
+{#        font-size: 12.5pt;#}
+{#        display: block;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .job-title {#}
+{#        margin-top: 5px;#}
+{#    }#}
+{##}
+{#    .date-details {#}
+{#        width: 20%;#}
+{#        text-align: right;#}
+{#        color: #555;#}
+{#        font-size: 11pt;#}
+{#    }#}
+{##}
+{#    .responsibilities {#}
+{#        padding-left: 20px;#}
+{#        margin-top: 5px;#}
+{#        list-style-type: disc;#}
+{#    }#}
+{##}
+{#    .responsibilities li {#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{#</style>#}
+{##}
+{#<div class="resume-container">#}
+{#    <div class="header">#}
+{#        <h1>{{ profile.name }}</h1>#}
+{#        <p>{{ profile.location }} | {{ profile.phone }} | <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>#}
+{#        <p>#}
+{#            <a href="{{ profile.linkedin }}" target="_blank">LinkedIn</a> |#}
+{#            <a href="{{ profile.portfolio_website }}" target="_blank">Portfolio Website</a>#}
+{#        </p>#}
+{#    </div>#}
+{##}
+{#    <div class="section">#}
+{#        <h2 class="section-title">Summary</h2>#}
+{#        <p>{{ profile.summary }}</p>#}
+{#    </div>#}
+{##}
+{#    <div class="section">#}
+{#        <h2 class="section-title">Skills</h2>#}
+{#        <div class="section-content">#}
+{#            {% for skill in skills %}#}
+{#                <p><strong>{{ skill.category }}:</strong> {{ skill.skills }}</p>#}
+{#            {% empty %}#}
+{#                <p>No skills listed.</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <div class="section">#}
+{#        <h2 class="section-title">Experience</h2>#}
+{#        <div class="section-content">#}
+{#            {% for experience in experiences %}#}
+{#                <div class="experience">#}
+{#                    <div class="content-details">#}
+{#                        <span class="content-title">{{ experience.company }}</span>#}
+{#                        <div class="job-title">{{ experience.position }}</div>#}
+{#                        <p>{{ experience.location }}</p>#}
+{#                    </div>#}
+{#                    <div class="date-details">#}
+{#                        <p>{{ experience.start_date|date:"M Y" }} - {{ experience.end_date|date:"M Y"|default:"Present" }}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <ul class="responsibilities">#}
+{#                    {% for responsibility in experience.responsibilities.all %}#}
+{#                        <li>{{ responsibility.description }}</li>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% empty %}#}
+{#                <p>No professional experiences listed.</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <div class="section">#}
+{#        <h2 class="section-title">Education</h2>#}
+{#        <div class="section-content">#}
+{#            {% for education in educations %}#}
+{#                <div class="education">#}
+{#                    <div class="content-details">#}
+{#                        <span class="content-title">{{ education.degree }}</span>#}
+{#                        <p>{{ education.institution }}</p>#}
+{#                        <p>{{ education.location }}</p>#}
+{#                    </div>#}
+{#                    <div class="date-details">#}
+{#                        <p>Graduated in {{ education.completion_date|date:"M Y" }}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% empty %}#}
+{#                <p>No educational records found.</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <div class="section">#}
+{#        <h2 class="section-title">Certifications</h2>#}
+{#        <div class="section-content">#}
+{#            {% for certification in certifications %}#}
+{#                <div class="certification">#}
+{#                    <div class="content-details">#}
+{#                        <span class="content-title">{{ certification.title }}</span>#}
+{#                        <p>{{ certification.organization }}</p>#}
+{#                        <p>Skills Covered: {{ certification.skills_covered }}</p>#}
+{#                    </div>#}
+{#                    <div class="date-details">#}
+{#                        <p>{{ certification.date|date:"M Y" }}</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% empty %}#}
+{#                <p>No certifications listed.</p>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .resume-container {
+        font-family: 'Times New Roman', serif;
+        margin: 0;
+        padding:0;
+        width: 100%;
+        min-height: 29.7cm;
+        background-color: #fff;
+        font-size: 11pt;
+        line-height: 1.5;
+    }
+
+   .header, .section {
+        margin-bottom: 15px;
+    }
+
+    .header h1 {
+        font-size: 22pt;
+        text-align: center;
+        margin: 0;
+    }
+
+    .header p {
+        text-align: center;
+        margin: 0;
+    }
+
+    .section-title {
+        border-bottom: 1px solid #000;
+        font-size: 18pt;
+        font-weight: bold;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .section-content {
+        margin-bottom: 15px;
+    }
+
+    .experience, .education, .certification {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .content-details {
+        width: 80%;
+    }
+
+    .content-title {
+        font-weight: bold;
+        font-size: 14pt;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .job-title {
+        margin-top: 5px;
+        {#font-style: italic;#}
+    }
+
+    .date-details {
+        width: 20%;
+        text-align: right;
+        color: #555;
+        font-size: 12pt;
+        
+    }
+
+    .responsibilities {
+        padding-left: 20px;
+        margin-top: 5px;
+        list-style-type:disc;
+    }
+
+    .responsibilities li {
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="resume-container">
+    <div class="header">
+        <h1>{{ profile.name }}</h1>
+        <p>{{ profile.location }} | {{ profile.phone }} | <a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+        <p>
+            <a href="{{ profile.linkedin }}" target="_blank">LinkedIn</a> |
+            <a href="{{ profile.portfolio_website }}" target="_blank">Portfolio Website</a>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Summary</h2>
+        <p>{{ profile.summary }}</p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Skills</h2>
+        <div class="section-content">
+            {% for skill in skills %}
+                <p><strong>{{ skill.category }}:</strong> {{ skill.skills }}</p>
+            {% empty %}
+                <p>No skills listed.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Experience</h2>
+        <div class="section-content">
+            {% for experience in experiences %}
+                <div class="experience">
+                    <div class="content-details">
+                        <span class="content-title">{{ experience.company }}</span>
+                        <div class="job-title">{{ experience.position }}</div>
+                        <p>{{ experience.location }}</p>
+                    </div>
+                    <div class="date-details">
+                        <p>{{ experience.start_date|date:"M Y" }} - {{ experience.end_date|date:"M Y"|default:"Present" }}</p>
+                    </div>
+                </div>
+                <ul class="responsibilities">
+                    {% for responsibility in experience.responsibilities.all %}
+                        <li>{{ responsibility.description }}</li>
+                    {% endfor %}
+                </ul>
+            {% empty %}
+                <p>No professional experiences listed.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Education</h2>
+        <div class="section-content">
+            {% for education in educations %}
+                <div class="education">
+                    <div class="content-details">
+                        <span class="content-title">{{ education.degree }}</span>
+                        <p>{{ education.institution }}</p>
+                        <p>{{ education.location }}</p>
+                    </div>
+                    <div class="date-details">
+                        <p>Graduated in {{ education.completion_date|date:"M Y" }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No educational records found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Certifications</h2>
+        <div class="section-content">
+            {% for certification in certifications %}
+                <div class="certification">
+                    <div class="content-details">
+                        <span class="content-title">{{ certification.title }}</span>
+                        <p>{{ certification.organization }}</p>
+                        <p>Skills Covered: {{ certification.skills_covered }}</p>
+                    </div>
+                    <div class="date-details">
+                        <p>{{ certification.date|date:"M Y" }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No certifications listed.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
